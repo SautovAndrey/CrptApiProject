@@ -1,2 +1,33 @@
 # CrptApiProject
-Проект Java для взаимодействия с API Crpt, поддерживающий ограничение скорости и создание документов.
+
+![Java](https://img.shields.io/badge/Java-17-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![GitHub issues](https://img.shields.io/github/issues/SautovAndrey/CrptApiProject)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/SautovAndrey/CrptApiProject)
+![GitHub stars](https://img.shields.io/github/stars/SautovAndrey/CrptApiProject?style=social)
+
+Проект CrptApi предназначен для взаимодействия с API Честного знака на языке Java. В рамках проекта реализован потокобезопасный класс, который поддерживает ограничение на количество запросов к API в определенный интервал времени. Это позволяет контролировать количество запросов, отправляемых в заданный промежуток времени, и предотвращать превышение лимитов API.
+
+Основные возможности
+Потокобезопасность: Класс гарантирует безопасное взаимодействие с API в многопоточной среде.
+Ограничение запросов: Реализован механизм ограничения количества запросов в заданный интервал времени.
+Создание документа: Поддерживается создание документов для ввода в оборот товаров, произведенных в РФ.
+Задание
+Необходимо реализовать на языке Java (можно использовать 17 версию) класс для работы с API Честного знака. Класс должен быть thread-safe и поддерживать ограничение на количество запросов к API. Ограничение указывается в конструкторе в виде количества запросов в определенный интервал времени. Например:
+public CrptApi(TimeUnit timeUnit, int requestLimit)
+timeUnit – указывает промежуток времени – секунда, минута и пр.
+requestLimit – положительное значение, которое определяет максимальное количество запросов в этом промежутке времени.
+
+При превышении лимита запрос вызов должен блокироваться, чтобы не превысить максимальное количество запросов к API и продолжить выполнение, без выбрасывания исключения, когда ограничение на количество вызов API не будет превышено в результате этого вызова. В любой ситуации превышать лимит на количество запросов запрещено для метода.
+
+Реализовать нужно единственный метод – Создание документа для ввода в оборот товара, произведенного в РФ. Документ и подпись должны передаваться в метод в виде Java объекта и строки соответственно.
+
+Вызывается по HTTPS метод POST следующий URL:
+https://ismp.crpt.ru/api/v3/lk/documents/create
+
+В теле запроса передается в формате JSON документ: {"description": { "participantInn": "string" }, "doc_id": "string", "doc_status": "string", "doc_type": "LP_INTRODUCE_GOODS", "importRequest": true, "owner_inn": "string", "participant_inn": "string", "producer_inn": "string", "production_date": "2020-01-23", "production_type": "string", "products": [ { "certificate_document": "string", "certificate_document_date": "2020-01-23", "certificate_document_number": "string", "owner_inn": "string", "producer_inn": "string", "production_date": "2020-01-23", "tnved_code": "string", "uit_code": "string", "uitu_code": "string" } ], "reg_date": "2020-01-23", "reg_number": "string"}
+
+При реализации можно использовать библиотеки HTTP клиента, JSON сериализации. Реализация должна быть максимально удобной для последующего расширения функционала.
+
+Решение должно быть оформлено в виде одного файла CrptApi.java. Все дополнительные классы, которые используются должны быть внутренними.
